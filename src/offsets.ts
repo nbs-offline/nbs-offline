@@ -64,5 +64,6 @@ export const Offsets = {
 
     LogicConfDataIsModuloOn: isAndroid ? 0x9ddff4 : 0x0,
 
-    TutorialState: isAndroid ? 0x802e94 : 0x0 // idk real name
+    TutorialState: isAndroid ? 0x802e94 : 0x0, // idk real name
+    LogicClientHomeIsEventSlotLocked: isAndroid ? 0x99d174 : 0x0
 };

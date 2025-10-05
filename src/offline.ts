@@ -70,4 +70,11 @@ export function installOfflineHooks() {
                 retval.replace(ptr(1));
             }
         });
+
+    Interceptor.attach(base.add(Offsets.LogicClientHomeIsEventSlotLocked),
+        {
+            onLeave(retval) {
+                retval.replace(ptr(0));
+            },
+        })
 }
