@@ -10,8 +10,8 @@ export class Player {
     thumbnail = 0;
     coins = 0;
     starpoints = 0;
-    trophies = 0;
-    highestTrophies = 0;
+    trophies = 1;
+    highestTrophies = 1;
     trophyRoadTier = 10000;
     xp = 0;
     tokens = 0;

@@ -14,10 +14,11 @@ export class OwnHomeDataMessage {
         stream.writeVint(-1230828389);
         stream.writeVint(2025257);
         stream.writeVint(40312);
-        stream.writeVint(0);
-        stream.writeVint(0);
-        stream.writeVint(0);
-        stream.writeVint(1);
+
+        stream.writeVint(player.trophies);
+        stream.writeVint(player.highestTrophies);
+        stream.writeVint(player.highestTrophies);
+        stream.writeVint(player.trophyRoadTier);
         stream.writeVint(0);
         stream.writeVint(28);
         stream.writeVint(0);
