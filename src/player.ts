@@ -12,7 +12,7 @@ export class Player {
     starpoints = 0;
     trophies = 1;
     highestTrophies = 1;
-    trophyRoadTier = 10000;
+    trophyRoadTier = 1;
     xp = 0;
     tokens = 0;
     level = 1;

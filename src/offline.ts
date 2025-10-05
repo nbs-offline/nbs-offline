@@ -10,6 +10,7 @@ import { backtrace } from "./util";
 export function installOfflineHooks() {
 
     Interceptor.replace(base.add(0x6b0980), new NativeCallback(function (self) {
+        console.log("Mode:", self.add(160).readS32());
         self.add(160).writeS32(4); // switch mode mode always to 4 i guess
         return self;
     }, "pointer", ["pointer"]));
@@ -56,7 +57,16 @@ export function installOfflineHooks() {
 
     Interceptor.attach(base.add(Offsets.MessageManagerReceiveMessage),
         {
-            onLeave: function (retval) {
+            onEnter(args) {
+                let message = args[1];
+                let type = PiranhaMessage.getMessageType(message);
+                let length = PiranhaMessage.getEncodingLength(message);
+
+                console.log("Received message");
+                console.log("Type:", type);
+                console.log("Length:", length);
+            },
+            onLeave(retval) {
                 retval.replace(ptr(1));
             }
         });

@@ -30,4 +30,10 @@ export class PiranhaMessage {
         const encode = new NativeFunction(vtable.add(Offsets.Encode).readPointer(), 'pointer', ['pointer']);
         return encode(message);
     }
+
+    static decode(message: NativePointer): NativePointer {
+        let vtable = message.readPointer();
+        const decode = new NativeFunction(vtable.add(Offsets.Decode).readPointer(), 'pointer', ['pointer']);
+        return decode(message);
+    }
 }

@@ -6,6 +6,7 @@ import { toHex } from "../../util.js";
 export class LoginOkMessage {
     static encode(player: Player): number[] {
         let stream = new ByteStream([]);
+        
         //console.log("LoginOK stream dump:\n", hexdump(new Uint8Array(stream.payload).buffer));
 
         return stream.payload;

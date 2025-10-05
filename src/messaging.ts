@@ -6,6 +6,7 @@ import { ByteStream } from "./bytestream";
 import { LoginOkMessage } from "./packets/server/LoginOkMessage";
 import { OwnHomeDataMessage } from "./packets/server/OwnHomeDataMessage";
 import { Config } from "./config";
+import { PlayerProfileMessage } from "./packets/server/PlayerProfileMessage";
 
 export class Messaging {
     static handleMessage(message: NativePointer) {
@@ -37,6 +38,8 @@ export class Messaging {
             Messaging.sendOfflineMessage(24101, OwnHomeDataMessage.encode(player));
         } else if (type == 14110) { // erm execute shouldn't have these args :nerd:
             //AskForBattleEndMessage.execute(player, stream);
+        } else if (type == 15081) {
+            Messaging.sendOfflineMessage(24113, PlayerProfileMessage.encode(player));
         }
     }
 
@@ -60,8 +63,12 @@ export class Messaging {
             "int",
             ["pointer"]
         );
-        let res = decodeFn(message);
-        console.log("Message decoded with return value", res);
+        try {
+            let res = decodeFn(message);
+            console.log("Message decoded with return value", res);
+        } catch (e) {
+            console.log("Failed to decode message", e);
+        }
         try {
             messageManagerReceiveMessage(getMessageManagerInstance(), message);
         } catch (e) {
