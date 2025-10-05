@@ -74,5 +74,6 @@ export const Offsets = {
     TutorialState: isAndroid ? 0x802e94 : 0x0, // idk real name
     LogicClientHomeIsEventSlotLocked: isAndroid ? 0x99d174 : 0x0,
 
-    HomeModeEnter: isAndroid ? 0x83c680 : 0x0
+    HomeModeEnter: isAndroid ? 0x83c680 : 0x0,
+    HomeModeExit: isAndroid ? 0x83c848 : 0x0
 };

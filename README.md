@@ -1,8 +1,6 @@
 # NBS Offline V63
 
-An offline client that supports Android and iOS.
-
-"If it works it works" - me, 2025
+An offline client for the latest version of the game. The code is dogshit.
 
 ## Credits
 
