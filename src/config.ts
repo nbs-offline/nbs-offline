@@ -3,5 +3,5 @@ export class Config {
     static build: number = 286;
     static minor: number = 0;
     static offline: boolean = true;
-    static offlineBattles: boolean = false;
+    static offlineBattles: boolean = true;
 }

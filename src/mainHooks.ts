@@ -58,17 +58,9 @@ export function installHooks() {
         Interceptor.attach(base.add(Offsets.HomePageStartGame),
             {
                 onEnter: function (args) {
-                    console.log("xd");
                     args[3] = ptr(3);
                 }
             });
-
-    Interceptor.attach(base.add(0x67f7c4),
-        {
-            onEnter(args) {
-                backtrace(this.context);
-            },
-        })
 
     /*
     Interceptor.replace(base.add(Offsets.LogicCharacterServerHasUlti), new NativeCallback(function (a1 : NativePointer) {
@@ -85,18 +77,6 @@ export function installHooks() {
         });
     */
 
-    Interceptor.replace(base.add(0x6b0980), new NativeCallback(function (self) {
-        self.add(160).writeS32(4); // switch mode mode always to 4 i guess
-        return self;
-    }, "pointer", ["pointer"]));
-
-    Interceptor.attach(base.add(Offsets.TutorialState),
-        {
-            onLeave(retval) {
-                retval.replace(ptr(-1));
-            },
-        })
-
     Interceptor.attach(base.add(Offsets.LogicConfDataIsModuloOn),
         {
             onEnter(args) {
@@ -107,17 +87,6 @@ export function installHooks() {
                 if (this.value) retval.replace(ptr(this.value));
             },
         });
-
-    Interceptor.attach(base.add(0x67f7c4),
-        {
-            onEnter(args) {
-                backtrace(this.context);
-            },
-        })
-
-    Interceptor.replace(base.add(0xa364ac), new NativeCallback(function () {
-        return 0xFFFFFFFF;
-    }, "int", []));
 
     if (Config.offline) installOfflineHooks();
     console.log("Done");

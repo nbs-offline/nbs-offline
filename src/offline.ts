@@ -39,6 +39,23 @@ export function handleMessage(message: NativePointer) {
 }
 
 export function installOfflineHooks() {
+
+    Interceptor.replace(base.add(0x6b0980), new NativeCallback(function (self) {
+        self.add(160).writeS32(4); // switch mode mode always to 4 i guess
+        return self;
+    }, "pointer", ["pointer"]));
+
+    Interceptor.attach(base.add(Offsets.TutorialState),
+        {
+            onLeave(retval) {
+                retval.replace(ptr(-1));
+            },
+        });
+
+    Interceptor.replace(base.add(0xa364ac), new NativeCallback(function () {
+        return 0xFFFFFFFF;
+    }, "int", []));
+
     Interceptor.attach(base.add(Offsets.ServerConnectionUpdate),
         {
             onEnter: function (args) {
