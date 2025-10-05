@@ -19,11 +19,9 @@ export class OwnHomeDataMessage {
         stream.writeVint(player.highestTrophies);
         stream.writeVint(player.highestTrophies);
         stream.writeVint(player.trophyRoadTier);
-        stream.writeVint(0);
-        stream.writeVint(28);
-        stream.writeVint(0);
-        stream.writeVint(43);
-        stream.writeVint(0);
+        stream.writeVint(player.xp);
+        stream.writeDataReference({ high: 28, low: player.thumbnail });
+        stream.writeDataReference({ high: 43, low: player.namecolor });
         stream.writeVint(0);
         stream.writeVint(0);
         stream.writeVint(0);
@@ -68,8 +66,8 @@ export class OwnHomeDataMessage {
         stream.writeVint(1);
         stream.writeVint(16);
         stream.writeVint(0);
-        stream.writeString("PL");
-        stream.writeString("");
+        stream.writeString(player.region);
+        stream.writeString(player.supportedCreator);
         stream.writeVint(12);
         stream.writeVint(1);
         stream.writeVint(15);
@@ -9582,7 +9580,7 @@ export class OwnHomeDataMessage {
         stream.writeVint(0);
         stream.writeVint(-1);
         stream.writeVint(2);
-        
+
         stream.writeVint(0);
         stream.writeVint(0);
         stream.writeVint(0);

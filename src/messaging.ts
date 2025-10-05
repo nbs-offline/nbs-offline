@@ -1,9 +1,45 @@
 import { Offsets } from "./offsets";
-import { base, createMessageByType, malloc, messageManagerReceiveMessage, operator_new } from "./definitions";
+import { base, createMessageByType, malloc, messageManagerReceiveMessage, operator_new, player } from "./definitions";
 import { PiranhaMessage } from "./piranhamessage";
 import { decodeString, getFactory, getMessageManagerInstance } from "./util";
+import { ByteStream } from "./bytestream";
+import { LoginOkMessage } from "./packets/server/LoginOkMessage";
+import { OwnHomeDataMessage } from "./packets/server/OwnHomeDataMessage";
+import { Config } from "./config";
 
 export class Messaging {
+    static handleMessage(message: NativePointer) {
+        let type = PiranhaMessage.getMessageType(message);
+        let length = PiranhaMessage.getEncodingLength(message);
+
+        console.log("Type:", type);
+        console.log("Length:", length);
+        let payloadPtr = PiranhaMessage.getByteStream(message).add(Offsets.PayloadPtr).readPointer();
+        let payload: ArrayBuffer | null = null;
+        try {
+            payload = payloadPtr.readByteArray(length);
+        } catch {
+            payloadPtr = PiranhaMessage.getByteStream(message).add(Offsets.PayloadPtr).readPointer();
+            payload = payloadPtr.readByteArray(length);
+        }
+
+        if (payload !== null && length != 0) {
+            let stream = new ByteStream(Array.from(new Uint8Array(payload)));
+            if (Config.dumpPackets)
+                console.log("Stream dump:\n", hexdump(payload));
+        }
+
+        if (type == 10100) { // ifs > switch
+            Messaging.sendOfflineMessage(20104, LoginOkMessage.encode(player));
+            Messaging.sendOfflineMessage(24101, OwnHomeDataMessage.encode(player));
+        }
+        else if (type == 17750) {
+            Messaging.sendOfflineMessage(24101, OwnHomeDataMessage.encode(player));
+        } else if (type == 14110) { // erm execute shouldn't have these args :nerd:
+            //AskForBattleEndMessage.execute(player, stream);
+        }
+    }
+
     static sendOfflineMessage(id: number, payload: number[]): NativePointer {
         let version = id == 20104 ? 1 : 0;
         let message = createMessageByType(getFactory(), id);

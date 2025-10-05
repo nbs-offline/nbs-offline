@@ -62,6 +62,60 @@ export function installHooks() {
                 }
             });
 
+    if (Config.dumpPackets && !Config.offline) {
+        const sendMsg = new NativeFunction(base.add(Offsets.MessageManagerSendMessage), "int", ["pointer", "pointer"])
+        Interceptor.replace(base.add(Offsets.MessageManagerSendMessage), new NativeCallback(function (messageManager: NativePointer, message: NativePointer) {
+            //backtrace(this.context);
+            PiranhaMessage.encode(message);
+            let type = PiranhaMessage.getMessageType(message);
+            let length = PiranhaMessage.getEncodingLength(message);
+
+            console.log("Type:", type);
+            console.log("Length:", length);
+            let payloadPtr = PiranhaMessage.getByteStream(message).add(Offsets.PayloadPtr).readPointer();
+            let payload: ArrayBuffer | null = null;
+            try {
+                payload = payloadPtr.readByteArray(length);
+            } catch {
+                payloadPtr = PiranhaMessage.getByteStream(message).add(Offsets.PayloadPtr).readPointer();
+                payload = payloadPtr.readByteArray(length);
+            }
+
+            if (payload !== null && length != 0) {
+                console.log("Stream dump:\n", hexdump(payload));
+            }
+
+            //PiranhaMessage.destroyMessage(message);
+            sendMsg(messageManager, message);
+
+            return 1;
+        }, "int", ["pointer", "pointer"]));
+
+        Interceptor.attach(base.add(Offsets.MessageManagerReceiveMessage),
+            {
+                onEnter(args) {
+                    let message = args[1];
+                    let type = PiranhaMessage.getMessageType(message);
+                    let length = PiranhaMessage.getEncodingLength(message);
+
+                    console.log("Type:", type);
+                    console.log("Length:", length);
+                    let payloadPtr = PiranhaMessage.getByteStream(message).add(Offsets.PayloadPtr).readPointer();
+                    let payload: ArrayBuffer | null = null;
+                    try {
+                        payload = payloadPtr.readByteArray(length);
+                    } catch {
+                        payloadPtr = PiranhaMessage.getByteStream(message).add(Offsets.PayloadPtr).readPointer();
+                        payload = payloadPtr.readByteArray(length);
+                    }
+
+                    if (payload !== null && length != 0) {
+                        console.log("Stream dump:\n", hexdump(payload));
+                    }
+                },
+            });
+    }
+
     /*
     Interceptor.replace(base.add(Offsets.LogicCharacterServerHasUlti), new NativeCallback(function (a1 : NativePointer) {
         return 1;
