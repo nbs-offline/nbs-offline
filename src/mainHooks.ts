@@ -1,11 +1,22 @@
 import { Offsets } from "./offsets";
-import { base, } from "./definitions";
+import { base, debugLoaded, } from "./definitions";
 import { installOfflineHooks } from "./offline";
 import { Config } from "./config";
 import { backtrace, decodeString, nop } from "./util";
 import { PiranhaMessage } from "./piranhamessage";
+import { addDebugFile, createDebugButton, setup } from "./debugmenu";
 
 export function installHooks() {
+    addDebugFile();
+    setup();
+
+    Interceptor.attach(base.add(Offsets.HomeModeEnter),
+        {
+            onLeave(retval) {
+                createDebugButton();
+            },
+        });
+
     Interceptor.attach(base.add(Offsets.LogicDailyDataGetIntValue),
         {
             onEnter(args) {

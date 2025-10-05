@@ -33,19 +33,26 @@ export const Offsets = {
 
     StringTableGetString: isAndroid ? 0x0 : 0x0,
     MoieClipGetTextFieldByName: isAndroid ? 0x0 : 0x0,
-    TextFieldSetText: isAndroid ? 0x0 : 0x0,
     MovieClipGetMovieClipByName: isAndroid ? 0x0 : 0x0,
-    GameButtonConstructor: isAndroid ? 0x0 : 0x0,
-    ResourceManagerGetMovieClip: isAndroid ? 0x0 : 0x0,
-    CustomButtonSetMovieClip: isAndroid ? 0x0 : 0x0,
+    ResourceManagerGetMovieClip: isAndroid ? 0xa70848 : 0x0,
+    GameButtonConstructor: isAndroid ? 0x4d1968 : 0x0,
+    GameMainLoadAsset: isAndroid ? 0xB0905C : 0x0,
     CustomButtonSetButtonListener: isAndroid ? 0x0 : 0x0,
     MovieClipHelperSetTextAndScaleIfNecassery: isAndroid ? 0x0 : 0x0,
     MovieClipSetChildVisible: isAndroid ? 0x0 : 0x0,
-    ScreenGetWidth: isAndroid ? 0x0 : 0x0,
-    ScreenGetHeight: isAndroid ? 0x0 : 0x0,
     GUIShowFloaterTextAtDefaultPos: isAndroid ? 0x0 : 0x0,
     GUIInstance: isAndroid ? 0x109b2a0 : 0x0,
     GameMainInstance: isAndroid ? 0x3fc778 : 0x0,
+    StageAddChild: isAndroid ? 0xAB6D6C : 0x0,
+    XPOS: 32,
+    YPOS: 36,
+    DisplayObjectSetXY: isAndroid ? 0xa987d4 : 0x0,
+    StageInstance: isAndroid ? 0x10a0500 : 0x0,
+    CustomButtonSetMovieClip: isAndroid ? 0xacefa4 : 0x0,
+    TextFieldSetText: isAndroid ? 0x4d1fd4 : 0x0,
+    CustomButtonButtonPressed: isAndroid ? 0xACEDD4 : 0x0,
+    MovieClipGoToAndStop: isAndroid ? 0xA9D26C : 0x0,
+    InitFn: 352,
 
     SettingsGetSelectedLanguage: isAndroid ? 0x0 : 0x0,
     LogicVersionIsChinaVersion: isAndroid ? 0x0 : 0x0,
@@ -65,5 +72,7 @@ export const Offsets = {
     LogicConfDataIsModuloOn: isAndroid ? 0x9ddff4 : 0x0,
 
     TutorialState: isAndroid ? 0x802e94 : 0x0, // idk real name
-    LogicClientHomeIsEventSlotLocked: isAndroid ? 0x99d174 : 0x0
+    LogicClientHomeIsEventSlotLocked: isAndroid ? 0x99d174 : 0x0,
+
+    HomeModeEnter: isAndroid ? 0x83c680 : 0x0
 };

@@ -61,13 +61,11 @@ export function decodeString(src: NativePointer): string | null {
 }
 
 export function strPtr(message: string) {
-    var charPtr = malloc(message.length + 1);
-    charPtr.writeUtf8String(message);
-    return charPtr
+    return Memory.allocUtf8String(message);
 }
 
 export function createStringObject(text: string) {
-    let ptr = malloc(128);
+    let ptr = malloc(40);
     stringCtor(ptr, strPtr(text));
     return ptr;
 }

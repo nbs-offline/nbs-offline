@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-#adb shell pm clear com.natesworks.nbsoffline.v4
+adb shell pm clear com.natesworks.nbsoffline.v4
 adb shell monkey -p com.natesworks.nbsoffline.v4 -c android.intent.category.LAUNCHER 1
 npm run build
 adb forward tcp:27042 tcp:27042

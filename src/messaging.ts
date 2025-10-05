@@ -1,5 +1,5 @@
 import { Offsets } from "./offsets";
-import { base, createMessageByType, malloc, messageManagerReceiveMessage, operator_new, player } from "./definitions";
+import { base, createMessageByType, debugLoaded, malloc, messageManagerReceiveMessage, operator_new, player } from "./definitions";
 import { PiranhaMessage } from "./piranhamessage";
 import { decodeString, getFactory, getMessageManagerInstance } from "./util";
 import { ByteStream } from "./bytestream";
@@ -7,6 +7,7 @@ import { LoginOkMessage } from "./packets/server/LoginOkMessage";
 import { OwnHomeDataMessage } from "./packets/server/OwnHomeDataMessage";
 import { Config } from "./config";
 import { PlayerProfileMessage } from "./packets/server/PlayerProfileMessage";
+import { createDebugButton, setup } from "./debugmenu";
 
 export class Messaging {
     static handleMessage(message: NativePointer) {
