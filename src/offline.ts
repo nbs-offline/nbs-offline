@@ -76,5 +76,5 @@ export function installOfflineHooks() {
             onLeave(retval) {
                 retval.replace(ptr(0));
             },
-        })
+        });
 }

@@ -1,3 +1,4 @@
+import { Config } from "./config";
 import { base, load, player, setBase, showFloaterText } from "./definitions";
 import { installHooks } from "./mainHooks";
 import { applyPatches } from "./patches";
@@ -19,6 +20,8 @@ for (const brawlerKey in player.ownedBrawlers) {
     load();
     setImmediate(() => {
         installHooks();
-        applyPatches();
+        if (Config.offline) {
+            applyPatches();
+        }
     });
 })();

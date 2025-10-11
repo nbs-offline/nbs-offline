@@ -65,13 +65,14 @@ export function installHooks() {
             },
         });
 
-    if (Config.offlineBattles)
+    if (Config.offlineBattles) {
         Interceptor.attach(base.add(Offsets.HomePageStartGame),
             {
                 onEnter: function (args) {
                     args[3] = ptr(3);
                 }
             });
+    }
 
     if (Config.dumpPackets && !Config.offline) {
         const sendMsg = new NativeFunction(base.add(Offsets.MessageManagerSendMessage), "int", ["pointer", "pointer"])
@@ -123,6 +124,80 @@ export function installHooks() {
                     if (payload !== null && length != 0) {
                         console.log("Stream dump:\n", hexdump(payload));
                     }
+                },
+            });
+    }
+
+    if (Config.dumpStructure && !Config.offline) {
+        Interceptor.attach(base.add(0x9eeb34),
+            {
+                onEnter(args) {
+                    console.log("[OWNHOMEDATAMESSAGE STRUCTURE]")
+                    this.readvint = Interceptor.attach(base.add(Offsets.ByteStreamReadVint),
+                        {
+                            onLeave(retval) {
+                                console.log("stream.writeVint(" + retval.toInt32() + ");"); // lmaio
+                            },
+                        });
+
+                    this.readint = Interceptor.attach(base.add(Offsets.ByteStreamReadInt),
+                        {
+                            onLeave(retval) {
+                                console.log("stream.writeInt(" + retval.toInt32(), ");");
+                            },
+                        });
+
+                    this.readbyte = Interceptor.attach(base.add(Offsets.ByteStreamReadByte),
+                        {
+                            onLeave(retval) {
+                                console.log("stream.writeByte(" + retval.toInt32(), ");");
+                            },
+                        });
+
+                    this.readbool = Interceptor.attach(base.add(Offsets.ByteStreamReadBool),
+                        {
+                            onLeave(retval) {
+                                console.log("stream.writeBoolean(" + (retval.toInt32() != 0 ? "true" : "false") + ");");
+                            },
+                        });
+
+                    this.readlong = Interceptor.attach(base.add(Offsets.ByteStreamReadLong),
+                        {
+                            onLeave(retval) {
+                                //console.log("stream.writeLong(", retval.toInt32(), ");");
+                            },
+                        });
+
+                    this.readString = Interceptor.attach(base.add(Offsets.ByteStreamReadString),
+                        {
+                            onLeave(retval) {
+                                let str = "";
+                                try {
+                                    str = decodeString(retval);
+                                } catch {
+
+                                }
+                                console.log("stream.writeString(\"" + str + "\");");
+                            },
+                        });
+
+                    this.readStringReference = Interceptor.attach(base.add(Offsets.ByteStreamReadStringReference),
+                        {
+                            onLeave(retval) {
+                                let str = "";
+                                str = decodeString(retval);
+                                console.log("stream.writeStringReference(\"" + str + "\");");
+                            },
+                        });
+                },
+                onLeave(retval) {
+                    this.readvint.detach();
+                    this.readint.detach();
+                    this.readbyte.detach();
+                    this.readbool.detach();
+                    this.readlong.detach();
+                    this.readString.detach();
+                    console.log("[/OWNHOMEDATAMESSAGE STRUCTURE]")
                 },
             });
     }

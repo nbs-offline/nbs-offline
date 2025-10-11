@@ -75,5 +75,13 @@ export const Offsets = {
     LogicClientHomeIsEventSlotLocked: isAndroid ? 0x99d174 : 0x0,
 
     HomeModeEnter: isAndroid ? 0x83c680 : 0x0,
-    HomeModeExit: isAndroid ? 0x83c848 : 0x0
+    HomeModeExit: isAndroid ? 0x83c848 : 0x0,
+
+    ByteStreamReadVint: isAndroid ? 0xae2034 : 0x0,
+    ByteStreamReadInt: isAndroid ? 0xae1810 : 0x0,
+    ByteStreamReadString: isAndroid ? 0xae0eac : 0x0,
+    ByteStreamReadByte: isAndroid ? 0xae18f4 : 0x0,
+    ByteStreamReadBool: isAndroid ? 0xae1414 : 0x0,
+    ByteStreamReadLong: isAndroid ? 0xae1a1c : 0x0,
+    ByteStreamReadStringReference: isAndroid ? 0xae0fe0 : 0x0
 };

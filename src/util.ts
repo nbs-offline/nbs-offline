@@ -53,11 +53,19 @@ export function backtrace(ctx: CpuContext | undefined): void {
     }
 }
 
-export function decodeString(src: NativePointer): string | null {
-    if (src.add(4).readInt() >= 8) {
-        return src.add(8).readPointer().readUtf8String();
+export function decodeString(src: NativePointer): string {
+    let length = src.add(4).readInt();
+    //console.log("String length:", length);
+    let result: string | null = "";
+    if (length >= 8) {
+        result = src.add(8).readPointer().readUtf8String();
+        if (result == null) throw Error("Invalid string");
+    } else {
+        result = src.add(8).readUtf8String();
+        if (result == null) throw Error("Invalid string");
     }
-    return src.add(8).readUtf8String();
+
+    return result;
 }
 
 export function strPtr(message: string) {
