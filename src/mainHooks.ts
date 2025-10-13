@@ -89,7 +89,7 @@ export function installHooks() {
             let payload = payloadPtr.readByteArray(length);
             if (payload !== null) {
                 let stream = new ByteStream(Array.from(new Uint8Array(payload)));
-                console.log("Stream dump:", stream.payload);
+                console.log("Stream dump:", payload);
 
                 if (type == 10100) { // ifs > switch
                     Messaging.sendOfflineMessage(20104, LoginOkMessage.encode(player));
