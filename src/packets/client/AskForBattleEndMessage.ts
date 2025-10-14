@@ -18,7 +18,7 @@ export class AskForBattleEndMessage {
             // ugly ass code
             heroes.push(new Hero(stream.readDataReference(), stream.readDataReference(), stream.readVint(), stream.readBoolean(), stream.readString()));
         }
-
+        
         console.log("AskBattleEndMessage:", JSON.stringify(heroes, null, 2));
         return new BattleEndData(gamemode, result, rank, mapID, heroes);
     }

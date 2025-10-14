@@ -70,7 +70,7 @@ export class ByteStream {
         return utf8ArrayToString(new Uint8Array(bytes));
     }
 
-    writeDataReference(val : Long) {
+    writeDataReference(val: Long) {
         this.bitoffset = 0;
         this.writeVint(val.high);
         if (val.high != 0)
@@ -259,5 +259,18 @@ export class ByteStream {
         this.bitoffset = 0;
         this.writeInt(high);
         this.writeInt(low);
+    }
+
+    writeHexa(hex: string): void {
+        for (let i = 0; i < hex.length; i += 2) {
+            const byteStr = hex.substring(i, i + 2);
+            const byte = parseInt(byteStr, 16);
+
+            if (isNaN(byte)) {
+                throw new Error(`invalid hex: ${byteStr}`);
+            }
+
+            this.writeByte(byte);
+        }
     }
 }

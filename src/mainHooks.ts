@@ -61,25 +61,19 @@ export function installHooks() {
             }
         });
 
-    Interceptor.attach(base.add(Offsets.IsAuthenticated),
+    Interceptor.attach(base.add(Offsets.MessageManagerSendMessage),
         {
-            onLeave(retval) {
-                console.log(retval.readS32());
+            onEnter(args) {
+                let messaging = args[0].add(Offsets.Messaging).readPointer();
+                messaging.add(Offsets.State).writeInt(5);
             },
         });
 
-    Interceptor.replace(base.add(Offsets.MessagingSendMessage), new NativeCallback(function (messageManager: NativePointer, message: NativePointer) {
-        let messaging = messageManager.add(Offsets.Messaging).readPointer();
-        PiranhaMessage.encode(message);
-        messagingSend(messaging.add(Offsets.Messaging), message);
-
-        return 1;
-    }, "int", ["pointer", "pointer"]));
+    Interceptor.replace(base.add(Offsets.MessageManagerSendKeepAliveMessage), new NativeCallback(function () { }, "void", []));
 
     Interceptor.replace(
         base.add(Offsets.MessagingSend),
         new NativeCallback(function (self, message) {
-
             let type = PiranhaMessage.getMessageType(message);
             let length = PiranhaMessage.getEncodingLength(message);
 
