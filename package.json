@@ -6,15 +6,15 @@
   "main": "src/index.ts",
   "scripts": {
     "prepare": "npm run build",
-    "build": "npx esbuild src/init.ts --bundle --format=iife --platform=neutral --target=es2020 --outfile=script.js"
+    "build": "frida-compile src/init.ts -o script.js"
   },
   "devDependencies": {
     "@types/frida-gum": "^18.3.1",
     "@types/node": "^18.14.0",
-    "esbuild": "0.25.9",
     "frida-compile": "^16.1.8"
   },
   "dependencies": {
-    "frida": "^17.2.17"
+    "frida": "^17.2.17",
+    "frida-fs": "^7.0.0"
   }
 }

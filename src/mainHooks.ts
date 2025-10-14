@@ -1,14 +1,16 @@
-import { Offsets } from "./offsets";
-import { PiranhaMessage } from "./piranhamessage";
-import { base, documentsDirectory, messagingSend, player, stringCtor, } from "./definitions";
-import { Messaging } from "./messaging";
-import { OwnHomeDataMessage } from "./packets/server/OwnHomeDataMessage";
-import { createStringObject, decodeString, getDocumentsDirectory, strPtr } from "./util";
-import { BattleEndMessage } from "./packets/server/BattleEndMessage";
-import { ByteStream } from "./bytestream";
-import { AskForBattleEndMessage } from "./packets/client/AskForBattleEndMessage";
-import { isAndroid } from "./platform";
-import { PlayerProfileMessage } from "./packets/server/PlayerProfileMessage";
+import { Offsets } from "./offsets.js";
+import { PiranhaMessage } from "./piranhamessage.js";
+import { base, documentsDirectory, messagingSend, player, stringCtor, } from "./definitions.js";
+import { Messaging } from "./messaging.js";
+import { OwnHomeDataMessage } from "./packets/server/OwnHomeDataMessage.js";
+import { createStringObject, decodeString, getDocumentsDirectory, strPtr } from "./util.js";
+import { BattleEndMessage } from "./packets/server/BattleEndMessage.js";
+import { ByteStream } from "./bytestream.js";
+import { AskForBattleEndMessage } from "./packets/client/AskForBattleEndMessage.js";
+import { isAndroid } from "./platform.js";
+import { PlayerProfileMessage } from "./packets/server/PlayerProfileMessage.js";
+import { AvatarNameCheckRequestMessage } from "./packets/client/AvatarNameCheckRequestMessage.js";
+import { ChangeAvatarNameMessage } from "./packets/client/ChangeAvatarNameMessage.js";
 
 export function installHooks() {
     Interceptor.attach(base.add(Offsets.DebuggerError),
@@ -95,6 +97,10 @@ export function installHooks() {
                     AskForBattleEndMessage.execute(player, stream);
                 } else if (type == 15081) { // get da profile
                     Messaging.sendOfflineMessage(24113, PlayerProfileMessage.encode(player));
+                } else if (type == 14600) { // avatar name check request
+                    AvatarNameCheckRequestMessage.execute(player, stream);
+                } else if (type == 10212) { // change avatar name message
+                    ChangeAvatarNameMessage.execute(player, stream);
                 }
             }
 

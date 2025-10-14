@@ -1,4 +1,4 @@
-import { isAndroid } from "./platform";
+import { isAndroid } from "./platform.js";
 
 export const Offsets = {
     ServerConnectionUpdate: isAndroid ? 0x45fa98 : 0x1fa618,

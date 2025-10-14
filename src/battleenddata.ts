@@ -1,5 +1,5 @@
-import { Hero } from "./hero";
-import { Long } from "./long";
+import { Hero } from "./hero.js";
+import { Long } from "./long.js";
 
 export class BattleEndData {
     gamemode: number;

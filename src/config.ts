@@ -1,5 +1,5 @@
 import { Brawler } from "./brawler.js";
-import { configPath } from "./definitions.js";
+import { configPath, libc } from "./definitions.js";
 import { getDefaultConfig } from "./util.js";
 
 export class Config {
@@ -24,7 +24,7 @@ export class Config {
     lobbyinfo = "";
     enableClubs = false;
     brawlPassPremium = true;
-    ownedBrawlers: Record<number, Brawler> = [];
+    ownedBrawlers: Record<number, Brawler> = {};
     disableBots = false;
     infiniteAmmo = false;
     infiniteSuper = false;
@@ -39,7 +39,6 @@ export function tryLoadDefaultConfig() {
         return;
     } catch (e) { }
     const defaultConfig = getDefaultConfig();
-    //console.log(defaultConfig);
     File.writeAllText(configPath, JSON.stringify(defaultConfig, null, 2));
 }
 
@@ -59,7 +58,7 @@ export function readConfig() {
     config.selectedBrawlers = json.selectedBrawlers;
     config.tokens = json.tokens;
     config.tokenDoublers = json.tokenDoublers;
-    config.trioWins = json["3v3Victories"]; // cant use . cuz names with numbers are invalid thats also why i named it trio victories
+    config.trioWins = json["3v3Victories"];
     config.soloWins = json.soloVictories;
     config.duoWins = json.duoVictories;
     config.challengeWins = json.mostChallengeWins;
@@ -91,4 +90,56 @@ export function readConfig() {
     }
 
     return config;
+}
+
+export function writeConfig(config: Config) {
+    const data: any = {};
+
+    data.name = config.name;
+    data.coins = config.coins;
+    data.gems = config.gems;
+    data.starpoints = config.starpoints;
+    data.level = config.experienceLevel;
+    data.experience = config.experience;
+    data.namecolor = config.namecolor;
+    data.thumbnail = config.thumbnail;
+    data.trophyRoadTier = config.trophyRoadTier;
+    data.selectedBrawlers = config.selectedBrawlers;
+    data.tokens = config.tokens;
+    data.tokenDoublers = config.tokenDoublers;
+    data["3v3Victories"] = config.trioWins;
+    data.soloVictories = config.soloWins;
+    data.duoVictories = config.duoWins;
+    data.mostChallengeWins = config.challengeWins;
+    data.lobbyinfo = config.lobbyinfo;
+    data.enableBrawlPass = config.enableBrawlPass;
+    data.enableShop = config.enableShop;
+    data.enableClubs = config.enableClubs;
+    data.brawlPassPremium = config.brawlPassPremium;
+    data.disableBots = config.disableBots;
+    data.infiniteAmmo = config.infiniteAmmo;
+    data.infiniteSuper = config.infiniteSuper;
+    data.china = config.china;
+    data.artTest = config.artTest;
+    data.customLoadingScreen = config.customLoadingScreen;
+    data.debugMenu = config.debugMenu;
+
+    data.unlockedBrawlers = {};
+    for (const [id, brawler] of Object.entries(config.ownedBrawlers)) {
+        data.unlockedBrawlers[Number(id)] = {
+            cardID: brawler.cardID,
+            skins: brawler.skins,
+            trophies: brawler.trophies,
+            highestTrophies: brawler.highestTrophies,
+            powerlevel: brawler.powerlevel,
+            powerpoints: brawler.powerpoints,
+            state: brawler.state,
+            masteryPoints: brawler.masteryPoints,
+            masteryClaimed: brawler.masteryClaimed
+        };
+    }
+
+    const remove = new NativeFunction(libc.getExportByName("remove"), "int", ["pointer"]);
+    remove(Memory.allocUtf8String(configPath));
+    File.writeAllText(configPath, JSON.stringify(data, null, 2));
 }

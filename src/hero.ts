@@ -1,4 +1,4 @@
-import { Long } from "./long";
+import { Long } from "./long.js";
 
 export class Hero {
     id: Long;

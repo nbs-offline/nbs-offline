@@ -1,7 +1,7 @@
-import { base, load, player, setBase, showFloaterText } from "./definitions";
-import { installHooks } from "./mainHooks";
-import { isAndroid } from "./platform";
-import { createStringObject, waitForModule } from "./util";
+import { base, load, player, setBase, showFloaterText } from "./definitions.js";
+import { installHooks } from "./mainHooks.js";
+import { isAndroid } from "./platform.js";
+import { createStringObject, waitForModule } from "./util.js";
 
 for (const brawlerKey in player.ownedBrawlers) {
     const brawler = player.ownedBrawlers[brawlerKey];

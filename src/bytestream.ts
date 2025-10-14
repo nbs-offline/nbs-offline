@@ -1,5 +1,5 @@
-import { Long } from "./long";
-import { utf8ArrayToString, stringToUtf8Array } from "./util";
+import { Long } from "./long.js";
+import { utf8ArrayToString, stringToUtf8Array } from "./util.js";
 
 export class ByteStream {
     payload: number[];

@@ -1,8 +1,8 @@
-import { Config, readConfig, tryLoadDefaultConfig } from "./config";
-import { Offsets } from "./offsets";
-import { isAndroid } from "./platform";
-import { Player } from "./player";
-import { getDocumentsDirectory } from "./util";
+import { Config, readConfig, tryLoadDefaultConfig } from "./config.js";
+import { Offsets } from "./offsets.js";
+import { isAndroid } from "./platform.js";
+import { Player } from "./player.js";
+import { getDocumentsDirectory } from "./util.js";
 
 export let base = NULL;
 
