@@ -6,6 +6,9 @@ An offline client that supports Android and iOS.
 
 - Main menu
 - Offline battles
+- Config
+- Player profile
+- Changing name
 
 ## Credits
 
