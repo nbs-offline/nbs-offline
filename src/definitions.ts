@@ -36,7 +36,7 @@ export function setBase(ptr: NativePointer) {
     base = ptr;
 }
 
-export const credits = `NBS Offline v1
+export const credits = `NBS Offline v4 Alpha
 
 Made by Natesworks 
 Discord: dsc.gg/nbsoffline

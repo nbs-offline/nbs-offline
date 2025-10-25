@@ -1,7 +1,7 @@
 import { Offsets } from "./offsets";
 import { base, createMessageByType, debugLoaded, malloc, messageManagerReceiveMessage, operator_new, player } from "./definitions";
 import { PiranhaMessage } from "./piranhamessage";
-import { decodeString, getFactory, getMessageManagerInstance } from "./util";
+import { decodeString, getMessageManagerInstance } from "./util";
 import { ByteStream } from "./bytestream";
 import { LoginOkMessage } from "./packets/server/LoginOkMessage";
 import { OwnHomeDataMessage } from "./packets/server/OwnHomeDataMessage";
@@ -46,7 +46,7 @@ export class Messaging {
 
     static sendOfflineMessage(id: number, payload: number[]): NativePointer {
         let version = id == 20104 ? 1 : 0;
-        let message = createMessageByType(getFactory(), id);
+        let message = createMessageByType(NULL, id);
         console.log(message);
         message.add(Offsets.Version).writeInt(version);
         PiranhaMessage.getByteStream(message).add(Offsets.PayloadSize).writeInt(payload.length);
