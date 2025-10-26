@@ -1,11 +1,13 @@
 import { base, malloc, stringCtor } from "./definitions";
 import { Offsets } from "./offsets";
 
-export function nop(addr: NativePointer) {
-    Memory.protect(addr, 4, 'rwx');
-    var w = new Arm64Writer(addr);
-    w.putNop();
-    w.flush();
+export function nop(addrs: NativePointer[]) {
+    for (let addr of addrs) {
+        Memory.protect(addr, 4, 'rwx');
+        var w = new Arm64Writer(addr);
+        w.putNop();
+        w.flush();
+    }
 }
 
 export function toHex(val: number): string {
@@ -23,6 +25,7 @@ export function getMessagingInstance(): NativePointer {
     console.log("Messaging instance", toHex(instance.sub(base).toUInt32()));
     return instance;
 }
+
 export function backtrace(ctx: CpuContext | undefined): void {
     const frames: any[] = Thread.backtrace(ctx, Backtracer.FUZZY);
     let lastAddr = "";

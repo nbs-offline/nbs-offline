@@ -70,11 +70,12 @@ export class Messaging {
         } catch (e) {
             console.log("Failed to decode message", e);
         }
+        console.log(message);
         try {
             messageManagerReceiveMessage(getMessageManagerInstance(), message);
-        } catch (e) {
-            console.log(e);
         }
+        catch (e) {}
+
         console.log("Message received");
         return message;
     }
