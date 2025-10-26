@@ -65,7 +65,7 @@ export function getDefaultConfig(): Config {
         config.coins = json.coins;
         config.gems = json.gems;
         config.starpoints = json.starpoints;
-        config.level = json.experienceLevel;
+        config.level = json.level;
         config.experience = json.experience;
         config.namecolor = json.namecolor;
         config.thumbnail = json.thumbnail;

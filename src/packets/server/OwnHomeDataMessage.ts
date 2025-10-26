@@ -318,7 +318,6 @@ export class OwnHomeDataMessage {
 
         stream.writeVint(ownedBrawlersCount);
         for (const cardID of Object.keys(player.ownedBrawlers).map(id => parseInt(id))) {
-            const brawler = player.ownedBrawlers[cardID];
             stream.writeDataReference({ high: 16, low: cardID })
             stream.writeVint(-1);
             stream.writeVint(0);
