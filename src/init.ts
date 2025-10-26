@@ -2,7 +2,7 @@ import { Config } from "./config";
 import { base, load, player, setBase, showFloaterText } from "./definitions";
 import { installHooks } from "./mainHooks";
 import { isAndroid } from "./platform";
-import { createStringObject, waitForModule } from "./util";
+import { createStringObject, nop, waitForModule } from "./util";
 
 for (const brawlerKey in player.ownedBrawlers) {
     const brawler = player.ownedBrawlers[brawlerKey];

@@ -275,6 +275,12 @@ export class ByteStream {
         this.writeInt(long.low);
     }
 
+    addCommodityArrayValue(csvID: number, rowID: number, Value: number) {
+        this.writeDataReference({ high: csvID, low: rowID });
+        this.writeVint(-1);
+        this.writeVint(Value);
+    }
+
     writeHexa(hex: string): void {
         for (let i = 0; i < hex.length; i += 2) {
             const byteStr = hex.substring(i, i + 2);
