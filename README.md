@@ -11,4 +11,5 @@ Some debug menu offsets from Ryo.
 
 - Main menu
 - Offline battles
+- Configuration file
 - All modes unlocked no matter trophies

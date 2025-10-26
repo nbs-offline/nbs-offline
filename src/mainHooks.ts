@@ -12,7 +12,7 @@ export function installHooks() {
     Interceptor.attach(base.add(Offsets.HomeModeEnter),
         {
             onLeave(retval) {
-                createDebugButton();
+                //createDebugButton();
             },
         });
 
