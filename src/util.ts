@@ -1,3 +1,4 @@
+import { Brawler } from "./brawler";
 import { base, malloc, stringCtor } from "./definitions";
 import { Offsets } from "./offsets";
 
@@ -125,4 +126,20 @@ export function waitForModule(name: string, intervalMs = 10): Promise<NativePoin
             }
         }, intervalMs);
     });
+}
+
+export function calculateTrophies(brawlerData: Record<number, Brawler>): number {
+    let trophies = 0;
+    for (const [_, brawler] of Object.entries(brawlerData as Record<string, any>)) {
+        trophies += brawler.highestTrophies;
+    }
+    return trophies;
+}
+
+export function calculateHighestTrophies(brawlerData: Record<number, Brawler>): number {
+    let trophies = 0;
+    for (const [_, brawler] of Object.entries(brawlerData as Record<string, any>)) {
+        trophies += brawler.highestTrophies;
+    }
+    return trophies;
 }

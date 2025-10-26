@@ -7,7 +7,6 @@ import { PiranhaMessage } from "./piranhamessage";
 import { addDebugFile, createDebugButton, setup } from "./debugmenu";
 
 export function installHooks() {
-    addDebugFile();
     setup();
 
     Interceptor.attach(base.add(Offsets.HomeModeEnter),

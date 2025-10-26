@@ -1,4 +1,5 @@
-import { Config } from "./config";
+import { Config, getDefaultConfig, readConfig } from "./config";
+import { addDebugFile } from "./debugmenu";
 import { base, load, player, setBase, showFloaterText } from "./definitions";
 import { installHooks } from "./mainHooks";
 import { isAndroid } from "./platform";
@@ -11,13 +12,15 @@ for (const brawlerKey in player.ownedBrawlers) {
     }
 }
 
+
 (async () => {
     let library = isAndroid ? "libg.so" : "laser";
     setBase(await waitForModule(library));
-    console.log("isAndroid", isAndroid);
-    console.log(`${library} loaded at: ${base}`);
-    load();
     setImmediate(() => {
+        console.log("isAndroid", isAndroid);
+        console.log(`${library} loaded at: ${base}`);
+        addDebugFile();
+        load();
         installHooks();
     });
 })();

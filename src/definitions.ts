@@ -1,3 +1,5 @@
+import { Config, readConfig } from "./config";
+import { readFile } from "./fs";
 import { Offsets } from "./offsets";
 import { isAndroid } from "./platform";
 import { Player } from "./player";
@@ -18,6 +20,10 @@ export let messagingSend: NativeFunction<number, [NativePointer, NativePointer]>
 export let showFloaterText: NativeFunction<number, [NativePointer, NativePointer, number, number]>;
 
 export let debugLoaded = false;
+export let configPath: string;
+export let pkg: string;
+export let dataDirectory: string;
+export let config: Config;
 
 export function setDebugLoaded(val: boolean) {
     debugLoaded = val;
@@ -30,6 +36,12 @@ export function load() {
     stringCtor = new NativeFunction(base.add(Offsets.StringConstructor), "pointer", ["pointer", "pointer"]);
     messagingSend = new NativeFunction(base.add(Offsets.MessagingSend), "bool", ["pointer", "pointer"]);
     showFloaterText = new NativeFunction(base.add(Offsets.GUIShowFloaterTextAtDefaultPos), "int", ["pointer", "pointer", "int", "float"]);
+
+    pkg = readFile("/proc/self/cmdline").split("\0")[0];
+    dataDirectory = `/storage/emulated/0/Android/data/${pkg}`;
+    configPath = dataDirectory + "/config.json";
+    config = readConfig();
+    player.applyConfig();
 }
 
 export function setBase(ptr: NativePointer) {

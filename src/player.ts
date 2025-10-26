@@ -1,5 +1,8 @@
 import { Brawler } from "./brawler.js";
+import { Config } from "./config.js";
+import { config } from "./definitions.js";
 import { Long } from "./long.js";
+import { calculateTrophies, calculateHighestTrophies } from "./util.js";
 
 export class Player {
     name = "Natesworks";
@@ -35,94 +38,25 @@ export class Player {
     passTokens = 0;
     favouriteBrawler = 0;
     bling = 0;
-    ownedBrawlers: Record<number, Brawler> = {
-        0: new Brawler(0, [], 0, 0, 11, 0, 0, 0),
-        1: new Brawler(4, [], 0, 0, 11, 0, 0, 0),
-        2: new Brawler(8, [], 0, 0, 11, 0, 0, 0),
-        3: new Brawler(12, [], 0, 0, 11, 0, 0, 0),
-        4: new Brawler(16, [], 0, 0, 11, 0, 0, 0),
-        5: new Brawler(20, [], 0, 0, 11, 0, 0, 0),
-        6: new Brawler(24, [], 0, 0, 11, 0, 0, 0),
-        7: new Brawler(28, [], 0, 0, 11, 0, 0, 0),
-        8: new Brawler(32, [], 0, 0, 11, 0, 0, 0),
-        9: new Brawler(36, [], 0, 0, 11, 0, 0, 0),
-        10: new Brawler(40, [], 0, 0, 11, 0, 0, 0),
-        11: new Brawler(44, [], 0, 0, 11, 0, 0, 0),
-        12: new Brawler(48, [], 0, 0, 11, 0, 0, 0),
-        13: new Brawler(52, [], 0, 0, 11, 0, 0, 0),
-        14: new Brawler(56, [], 0, 0, 11, 0, 0, 0),
-        15: new Brawler(60, [], 0, 0, 11, 0, 0, 0),
-        16: new Brawler(64, [], 0, 0, 11, 0, 0, 0),
-        17: new Brawler(68, [], 0, 0, 11, 0, 0, 0),
-        18: new Brawler(72, [], 0, 0, 11, 0, 0, 0),
-        19: new Brawler(95, [], 0, 0, 11, 0, 0, 0),
-        20: new Brawler(100, [], 0, 0, 11, 0, 0, 0),
-        21: new Brawler(105, [], 0, 0, 11, 0, 0, 0),
-        22: new Brawler(110, [], 0, 0, 11, 0, 0, 0),
-        23: new Brawler(115, [], 0, 0, 11, 0, 0, 0),
-        24: new Brawler(120, [], 0, 0, 11, 0, 0, 0),
-        25: new Brawler(125, [], 0, 0, 11, 0, 0, 0),
-        26: new Brawler(130, [], 0, 0, 11, 0, 0, 0),
-        27: new Brawler(177, [], 0, 0, 11, 0, 0, 0),
-        28: new Brawler(182, [], 0, 0, 11, 0, 0, 0),
-        29: new Brawler(188, [], 0, 0, 11, 0, 0, 0),
-        30: new Brawler(194, [], 0, 0, 11, 0, 0, 0),
-        31: new Brawler(200, [], 0, 0, 11, 0, 0, 0),
-        32: new Brawler(206, [], 0, 0, 11, 0, 0, 0),
-        34: new Brawler(218, [], 0, 0, 11, 0, 0, 0),
-        35: new Brawler(224, [], 0, 0, 11, 0, 0, 0),
-        36: new Brawler(230, [], 0, 0, 11, 0, 0, 0),
-        37: new Brawler(236, [], 0, 0, 11, 0, 0, 0),
-        38: new Brawler(279, [], 0, 0, 11, 0, 0, 0),
-        39: new Brawler(296, [], 0, 0, 11, 0, 0, 0),
-        40: new Brawler(303, [], 0, 0, 11, 0, 0, 0),
-        41: new Brawler(320, [], 0, 0, 11, 0, 0, 0),
-        42: new Brawler(327, [], 0, 0, 11, 0, 0, 0),
-        43: new Brawler(334, [], 0, 0, 11, 0, 0, 0),
-        44: new Brawler(341, [], 0, 0, 11, 0, 0, 0),
-        45: new Brawler(358, [], 0, 0, 11, 0, 0, 0),
-        46: new Brawler(365, [], 0, 0, 11, 0, 0, 0),
-        47: new Brawler(372, [], 0, 0, 11, 0, 0, 0),
-        48: new Brawler(379, [], 0, 0, 11, 0, 0, 0),
-        49: new Brawler(386, [], 0, 0, 11, 0, 0, 0),
-        50: new Brawler(393, [], 0, 0, 11, 0, 0, 0),
-        51: new Brawler(410, [], 0, 0, 11, 0, 0, 0),
-        52: new Brawler(417, [], 0, 0, 11, 0, 0, 0),
-        53: new Brawler(427, [], 0, 0, 11, 0, 0, 0),
-        54: new Brawler(434, [], 0, 0, 11, 0, 0, 0),
-        56: new Brawler(448, [], 0, 0, 11, 0, 0, 0),
-        57: new Brawler(466, [], 0, 0, 11, 0, 0, 0),
-        58: new Brawler(474, [], 0, 0, 11, 0, 0, 0),
-        59: new Brawler(491, [], 0, 0, 11, 0, 0, 0),
-        60: new Brawler(499, [], 0, 0, 11, 0, 0, 0),
-        61: new Brawler(507, [], 0, 0, 11, 0, 0, 0),
-        62: new Brawler(515, [], 0, 0, 11, 0, 0, 0),
-        63: new Brawler(523, [], 0, 0, 11, 0, 0, 0),
-        64: new Brawler(531, [], 0, 0, 11, 0, 0, 0),
-        65: new Brawler(539, [], 0, 0, 11, 0, 0, 0),
-        66: new Brawler(547, [], 0, 0, 11, 0, 0, 0),
-        67: new Brawler(557, [], 0, 0, 11, 0, 0, 0),
-        68: new Brawler(565, [], 0, 0, 11, 0, 0, 0),
-        69: new Brawler(573, [], 0, 0, 11, 0, 0, 0),
-        70: new Brawler(581, [], 0, 0, 11, 0, 0, 0),
-        71: new Brawler(589, [], 0, 0, 11, 0, 0, 0),
-        72: new Brawler(597, [], 0, 0, 11, 0, 0, 0),
-        73: new Brawler(605, [], 0, 0, 11, 0, 0, 0),
-        74: new Brawler(619, [], 0, 0, 11, 0, 0, 0),
-        75: new Brawler(633, [], 0, 0, 11, 0, 0, 0),
-        76: new Brawler(642, [], 0, 0, 11, 0, 0, 0),
-        77: new Brawler(655, [], 0, 0, 11, 0, 0, 0),
-        78: new Brawler(663, [], 0, 0, 11, 0, 0, 0),
-        79: new Brawler(671, [], 0, 0, 11, 0, 0, 0),
-        80: new Brawler(730, [], 0, 0, 11, 0, 0, 0),
-        81: new Brawler(748, [], 0, 0, 11, 0, 0, 0),
-        82: new Brawler(760, [], 0, 0, 11, 0, 0, 0),
-        83: new Brawler(768, [], 0, 0, 11, 0, 0, 0),
-        84: new Brawler(800, [], 0, 0, 11, 0, 0, 0),
-        85: new Brawler(811, [], 0, 0, 11, 0, 0, 0),
-        86: new Brawler(828, [], 0, 0, 11, 0, 0, 0),
-        87: new Brawler(844, [], 0, 0, 11, 0, 0, 0),
-        89: new Brawler(862, [], 0, 0, 11, 0, 0, 0),
-        90: new Brawler(871, [], 0, 0, 11, 0, 0, 0)
-    };
+    ownedBrawlers: Record<number, Brawler> = {};
+    applyConfig() {
+        this.name = config.name;
+        this.coins = config.coins;
+        this.gems = config.gems;
+        this.level = config.experienceLevel;
+        this.xp = config.experience;
+        this.namecolor = config.namecolor;
+        this.thumbnail = config.thumbnail;
+        this.trophyRoadTier = config.trophyRoadTier;
+        this.tokens = config.tokens;
+        this.tokenDoublers = config.tokenDoublers;
+        this.trioVictories = config.trioWins;
+        this.soloVictories = config.soloWins;
+        this.duoVictories = config.duoWins;
+        this.challengeWins = config.challengeWins;
+        this.selectedBrawlers = config.selectedBrawlers;
+        this.ownedBrawlers = config.ownedBrawlers;
+        this.trophies = calculateTrophies(config.ownedBrawlers);
+        this.highestTrophies = calculateHighestTrophies(config.ownedBrawlers);
+    }
 }
