@@ -138,6 +138,8 @@ export function installHooks() {
             },
         });
 
+    Interceptor.replace(base.add(Offsets.DoContentPatch), new NativeCallback(function () {}, "void", []));
+
     if (Config.offline) installOfflineHooks();
     console.log("Done");
 }

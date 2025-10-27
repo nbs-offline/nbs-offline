@@ -83,5 +83,7 @@ export const Offsets = {
     ByteStreamReadByte: isAndroid ? 0xae18f4 : 0x0,
     ByteStreamReadBool: isAndroid ? 0xae1414 : 0x0,
     ByteStreamReadLong: isAndroid ? 0xae1a1c : 0x0,
-    ByteStreamReadStringReference: isAndroid ? 0xae0fe0 : 0x0
+    ByteStreamReadStringReference: isAndroid ? 0xae0fe0 : 0x0,
+
+    DoContentPatch: isAndroid ? 0x840508 : 0x0 // idk name
 };
