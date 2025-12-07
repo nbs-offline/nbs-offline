@@ -78,6 +78,8 @@ export class ByteStream {
     }
 
     readVint(): number {
+        console.log("im black variant int")
+        
         let start = this.offset;
         this.bitoffset = 0;
         let b0 = this.payload[start];
@@ -180,6 +182,8 @@ export class ByteStream {
     }
 
     writeVint(value: number) {
+        console.log("im white variant int")
+        
         this.bitoffset = 0;
         if (value < 0) {
             if (value >= -63) {
