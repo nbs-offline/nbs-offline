@@ -286,4 +286,11 @@ export function installHooks() {
       }
     },
   });
+
+  Interceptor.replace(
+    base.add(Offsets.GetPlayerDraftMapNumLimit), 
+    new NativeCallback(() => {
+      return config.draftMapLimit
+    }, 'int', [])
+  )
 }

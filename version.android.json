@@ -53,6 +53,8 @@
 
     "StringTableGetString": "0x76a5e4",
 
+    "GetPlayerDraftMapNumLimit": "0x8760a0",
+
     "GetPlayerCount": "0x912b14"
   }
 }

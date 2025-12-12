@@ -49,6 +49,8 @@
     "StringTableGetString": "0x31d054",
     "StringTableGetStringThunk": "0x31d050",
 
+    "GetPlayerDraftMapNumLimit": "0x1e3d50",
+
     "GetPlayerCount": "0x44f260"
   }
 }

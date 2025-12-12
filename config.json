@@ -37,6 +37,7 @@
   "fameCredits": 300000,
   "allCreatorCodesValid": false,
   "randomBotNames": true,
+  "draftMapLimit": 5,
   "events": [
     {
       "slot": 2,

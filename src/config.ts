@@ -46,6 +46,7 @@ export class Config {
   allCreatorCodesValid = false;
   creatorCodes: string[] = [];
   randomBotNames = true;
+  draftMapLimit: number = 5;
 }
 export function tryLoadDefaultConfig() {
   try {
@@ -121,6 +122,7 @@ export function readConfig() {
   config.allCreatorCodesValid = json.allCreatorCodesValid || false;
   config.creatorCodes = json.creatorCodes || ["Natesworks", "kubune", "Hallo"];
   config.randomBotNames = json.randomBotNames || false;
+  config.draftMapLimit = json.draftMapLimit || 5;
 
   return config;
 }
