@@ -4,7 +4,7 @@ import { LogicCommand } from "../../logiccommand.js";
 import { config } from "../../definitions.js";
 
 export class LogicSetSupportedCreatorCommand {
-  static encode(player: Player): number[] {
+  static encode(): number[] {
     let stream = new ByteStream([]);
 
     stream.writeVint(215);
@@ -15,4 +15,3 @@ export class LogicSetSupportedCreatorCommand {
     return stream.payload;
   }
 }
-

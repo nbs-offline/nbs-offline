@@ -4,41 +4,13 @@ import {
   base,
   botNames,
   config,
-  documentsDirectory,
-  messagingSend,
-  player,
   setBotNames,
-  setText,
   setTextAndScaleIfNecessary,
-  stringCtor,
 } from "./definitions.js";
 import { Messaging } from "./messaging.js";
-import { OwnHomeDataMessage } from "./packets/server/OwnHomeDataMessage.js";
-import {
-  createStringObject,
-  decodeString,
-  getBotNames,
-  getDocumentsDirectory,
-  strPtr,
-} from "./util.js";
-import { BattleEndMessage } from "./packets/server/BattleEndMessage.js";
+import { createStringObject, decodeString, getBotNames } from "./util.js";
 import { ByteStream } from "./bytestream.js";
-import { AskForBattleEndMessage } from "./packets/client/AskForBattleEndMessage.js";
 import { isAndroid } from "./platform.js";
-import { PlayerProfileMessage } from "./packets/server/PlayerProfileMessage.js";
-import { AvatarNameCheckRequestMessage } from "./packets/client/AvatarNameCheckRequestMessage.js";
-import { ChangeAvatarNameMessage } from "./packets/client/ChangeAvatarNameMessage.js";
-import { EndClientTurnMessage } from "./packets/client/EndClientTurnMessage.js";
-import { writeConfig } from "./config.js";
-import { SetSupportedCreatorMessage } from "./packets/client/SetSupportedCreatorMessage.js";
-import { create } from "domain";
-import { CreatePlayerMapMessage } from "./packets/client/CreatePlayerMapMessage.js";
-import { PlayerMapsMessage } from "./packets/server/PlayerMapsMessage.js";
-import { DeletePlayerMapMessage} from "./packets/client/DeletePlayerMapMessage.js"
-import { TeamCreateMessage } from "./packets/client/teams/TeamCreateMessage.js"
-import { TeamEntry } from "./teams/teamentry.js"
-import { TeamMember } from "./teams/teammember.js"
-import { Long } from "./long.js";
 
 let progress: number;
 let hasLoaded = false;
@@ -152,60 +124,7 @@ export function installHooks() {
         if (payload !== null) {
           let stream = new ByteStream(Array.from(new Uint8Array(payload)));
           console.log("Stream dump:", payload);
-
-          if (type == 10100) {
-            // ifs > switch
-            Messaging.sendOfflineMessage(20104, []);
-            Messaging.sendOfflineMessage(
-              24101,
-              OwnHomeDataMessage.encode(player),
-            );
-	    let entry = new TeamEntry(new Long(0, 1), 1, 0, 1);
-            entry.teamMembers.push(new TeamMember(player, 11, true, 0, 1000));
-	    console.log("entry");
-	    let stream = new ByteStream([]);
-	    Messaging.sendOfflineMessage(24124, entry.encode(stream).payload);
-          } else if (type == 17750 || type == 12108) {
-            // go home from offline practice
-            if (config.tutorial) {
-              config.tutorial = false;
-              writeConfig(config);
-            }
-            Messaging.sendOfflineMessage(
-              24101,
-              OwnHomeDataMessage.encode(player),
-            );  
-          } else if (type == 14110) {
-            // erm execute shouldn't have these args :nerd:
-            AskForBattleEndMessage.execute(player, stream);
-          } else if (type == 15081) {
-            // get da profile
-            Messaging.sendOfflineMessage(
-              24113,
-              PlayerProfileMessage.encode(player),
-            );
-          } else if (type == 14600) {
-            // avatar name check request
-            AvatarNameCheckRequestMessage.execute(player, stream);
-          } else if (type == 10212) {
-            // change avatar name message
-            ChangeAvatarNameMessage.execute(player, stream);
-          } else if (type == 14102) {
-            EndClientTurnMessage.decodeAndExecute(player, stream);
-          } else if (type == 18686) {
-            SetSupportedCreatorMessage.decodeAndExecute(player, stream);
-          } else if (type == 12100) {
-            let map = CreatePlayerMapMessage.execute(player, stream);
-          } else if (type == 12102) {
-            Messaging.sendOfflineMessage(
-              22102,
-              PlayerMapsMessage.encode(player),
-            );
-          } else if (type == 12101) {
-	    DeletePlayerMapMessage.execute(player, stream);
-	  } else if (type == 14350) {
-	    TeamCreateMessage.execute(player, stream);
-	  }
+          Messaging.handleMessage(type, stream);
         }
 
         PiranhaMessage.destroyMessage(message);

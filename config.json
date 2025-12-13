@@ -38,6 +38,18 @@
   "allCreatorCodesValid": false,
   "randomBotNames": true,
   "draftMapLimit": 5,
+  "winstreak": 0,
+  "winstreakBrawler": 0,
+  "creationDate": 0,
+  "previousStats": {
+    "highestRoboRumbleLvlPassed": 0,
+    "highestBossFightLvlPassed": 0,
+    "highestRampageLvlPassed": 0,
+    "challengeWins": 0,
+    "highestClubLeague": 0,
+    "highestSoloLeague": 0,
+    "r35brawlers": 0
+  },
   "events": [
     {
       "slot": 2,

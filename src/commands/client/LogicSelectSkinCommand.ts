@@ -4,12 +4,16 @@ import { config } from "../../definitions.js";
 import { LogicCommand } from "../../logiccommand.js";
 
 export class LogicSelectSkinCommand {
-  static decodeAndExecute(stream: ByteStream): ByteStream {
+  static decode(stream: ByteStream): any {
     stream = LogicCommand.decode(stream);
     let skinID = stream.readDataReference().low;
     console.log("New skin id:", skinID);
     let unk1 = stream.readVint();
-    //writeConfig(config);
-    return stream;
+    return { stream, skinID };
+  }
+
+  static execute(skinID: number) {
+    console.log("New skin id:", skinID);
+    // todo
   }
 }

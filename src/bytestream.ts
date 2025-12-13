@@ -138,6 +138,12 @@ export class ByteStream {
     return Number((BigInt(high) << 32n) | BigInt(low >>> 0));
   }
 
+  readVlongAsLong(): Long {
+    let high = this.readVint();
+    let low = this.readVint();
+    return new Long(high, low);
+  }
+
   readBoolean(): boolean {
     this.bitoffset = 0;
     return this.payload[this.offset++] !== 0;

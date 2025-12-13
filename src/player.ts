@@ -1,9 +1,10 @@
+// TODO remove
+
 import { Brawler } from "./brawler.js";
 import { Config } from "./config.js";
 import { calculateHighestTrophies, calculateTrophies } from "./util.js";
 
 export class Player {
-  name = "Natesworks";
   token = "pXrvhSEPBUQo70jmePrPVQmHJHUQMrpWav82U1kH";
   id = [0, 1];
   namecolor = 9;
@@ -36,7 +37,6 @@ export class Player {
   bling = 0;
   ownedBrawlers: Record<number, Brawler> = {};
   applyConfig(cfg: Config) {
-    this.name = cfg.name;
     this.coins = cfg.coins;
     this.gems = cfg.gems;
     this.level = cfg.experienceLevel;

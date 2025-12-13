@@ -1,6 +1,6 @@
-import { ByteStream } from "../../bytestream";
-import { Player } from "../../player";
-import { PlayerMap } from "../../playermap";
+import { ByteStream } from "../../../bytestream";
+import { Player } from "../../../player";
+import { PlayerMap } from "../../../playermap";
 
 export class CreatePlayerMapResponseMessage {
   static encode(player: Player, map: PlayerMap): number[] {

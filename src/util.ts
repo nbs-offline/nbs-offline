@@ -222,8 +222,7 @@ export function shuffle(arr: string[]): string[] {
   while (idx != 0) {
     let shuffledIdx = Math.floor(Math.random() * idx);
     idx--;
-    [arr[idx], arr[shuffledIdx]] = [
-      arr[shuffledIdx], arr[idx]];
+    [arr[idx], arr[shuffledIdx]] = [arr[shuffledIdx], arr[idx]];
   }
 
   return arr;
@@ -233,8 +232,10 @@ export function getBotNames(n: number): string[] {
   let arr: string[] = [];
   let i = 1;
   while (true) {
-    let name = decodeString(getString(Memory.allocUtf8String("TID_BOT_" + i.toString())));
-      if (!name) throw new Error("name is null");
+    let name = decodeString(
+      getString(Memory.allocUtf8String("TID_BOT_" + i.toString())),
+    );
+    if (!name) throw new Error("name is null");
     if (i >= n && name.startsWith("TID_")) break;
     i++;
     arr.push(name);

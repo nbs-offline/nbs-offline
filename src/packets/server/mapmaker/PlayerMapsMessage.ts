@@ -1,7 +1,7 @@
-import { config, player } from "../../definitions.js";
-import { ByteStream } from "../../bytestream.js";
-import { Player } from "../../player";
-import { PlayerMap } from "../../playermap.js";
+import { config, player } from "../../../definitions.js";
+import { ByteStream } from "../../../bytestream.js";
+import { Player } from "../../../player";
+import { PlayerMap } from "../../../playermap.js";
 
 export class PlayerMapsMessage {
   static encode(player: Player): number[] {

@@ -38,8 +38,10 @@ export let setTextAndScaleIfNecessary: any;
 export let getString: any;
 
 export function load() {
-  pkgName = getPackageName();
-  console.log("Package name:", pkgName);
+  if (isAndroid) {
+    pkgName = getPackageName();
+    console.log("Package name:", pkgName);
+  }
   getOffsetsFromJSON();
 
   createMessageByType = new NativeFunction(
@@ -105,7 +107,15 @@ export function load() {
     "void",
     ["pointer", "pointer", "bool", "bool"],
   );
-  getString = new NativeFunction(base.add(isAndroid ? Offsets.StringTableGetString : Offsets.StringTableGetStringThunk), "pointer", ["pointer"]);
+  getString = new NativeFunction(
+    base.add(
+      isAndroid
+        ? Offsets.StringTableGetString
+        : Offsets.StringTableGetStringThunk,
+    ),
+    "pointer",
+    ["pointer"],
+  );
 
   documentsDirectory = getDocumentsDirectory();
   configPath = documentsDirectory + "/config.json";
@@ -136,6 +146,6 @@ kubune:
 - Ranked reputation
 `;
 
-export function setBotNames(x: string[]){
+export function setBotNames(x: string[]) {
   botNames = x;
 }

@@ -9,19 +9,30 @@ export class CommandHandler {
   static handleCommand(id: number, stream: ByteStream): ByteStream {
     switch (id) {
       case 527:
-        stream = LogicSetPlayerNameColorCommand.decodeAndExecute(stream);
+        var namecolor = 0;
+        ({ stream, namecolor } = LogicSetPlayerNameColorCommand.decode(stream));
+        LogicSetPlayerNameColorCommand.execute(namecolor);
         break;
       case 505:
-        stream = LogicSetPlayerThumbnailCommand.decodeAndExecute(stream);
+        var thumbnail = 0;
+        ({ stream, thumbnail } = LogicSetPlayerThumbnailCommand.decode(stream));
+        LogicSetPlayerThumbnailCommand.execute(thumbnail);
         break;
       case 570:
-        stream = LogicSelectFavouriteHeroCommand.decodeAndExecute(stream);
+        var character = 0;
+        ({ stream, character } =
+          LogicSelectFavouriteHeroCommand.decode(stream));
+        LogicSelectFavouriteHeroCommand.execute(character);
         break;
       case 525:
-        stream = LogicSelectCharacterCommand.decodeAndExecute(stream);
+        var character = 0;
+        ({ stream, character } = LogicSelectCharacterCommand.decode(stream));
+        LogicSelectCharacterCommand.execute(character);
         break;
       case 506:
-        stream = LogicSelectSkinCommand.decodeAndExecute(stream);
+        var skin = 0;
+        ({ stream, skin } = LogicSelectSkinCommand.decode(stream));
+        LogicSelectSkinCommand.execute(skin);
         break;
       default:
         console.log("Unhandled command of type:", id);

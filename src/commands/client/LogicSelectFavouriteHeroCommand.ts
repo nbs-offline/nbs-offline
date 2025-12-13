@@ -4,12 +4,15 @@ import { config } from "../../definitions.js";
 import { LogicCommand } from "../../logiccommand.js";
 
 export class LogicSelectFavouriteHeroCommand {
-  static decodeAndExecute(stream: ByteStream): ByteStream {
+  static decode(stream: ByteStream): any {
     stream = LogicCommand.decode(stream);
-    let heroID = stream.readDataReference().low;
-    console.log("New hero id:", heroID);
-    config.favouriteBrawler = heroID;
+    let characterID = stream.readDataReference().low;
+    return { stream, characterID };
+  }
+
+  static execute(characterID: number) {
+    console.log("New favourite brawler id:", characterID);
+    config.favouriteBrawler = characterID;
     writeConfig(config);
-    return stream;
   }
 }

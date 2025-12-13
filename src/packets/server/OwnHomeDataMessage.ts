@@ -1,9 +1,9 @@
 import { Player } from "../../player.js";
 import { ByteStream } from "../../bytestream.js";
-import { config } from "../../definitions.js";
+import { config, player } from "../../definitions.js";
 
 export class OwnHomeDataMessage {
-  static encode(player: Player): number[] {
+  static encode(): number[] {
     let stream = new ByteStream([]);
     const currentTime = Date.now() / 1000 + 3600 * 4;
     console.log("Encoding OHD");
@@ -329,7 +329,9 @@ export class OwnHomeDataMessage {
     stream.writeVint(1);
     stream.writeBoolean(true);
     stream.writeString("1a1d6744f7dfb7bcfa54e3876c944b1da9d075db");
-    stream.writeString("/3f8dc547-1aed-4d85-81b0-32ead16f7474_collab_toystory.sc");
+    stream.writeString(
+      "/3f8dc547-1aed-4d85-81b0-32ead16f7474_collab_toystory.sc",
+    );
     stream.writeVint(83);
     stream.writeVint(6);
     stream.writeVint(0);
@@ -366,7 +368,7 @@ export class OwnHomeDataMessage {
     stream.writeVint(0);
     stream.writeVint(0);
     stream.writeVint(1); // todo: unlocking brawler
-    stream.writeDataReference({high: 16, low: 0});
+    stream.writeDataReference({ high: 16, low: 0 });
     stream.writeVint(2); // credits needed
     stream.writeVint(10000); // gem unlock price
     stream.writeVint(0);
@@ -433,7 +435,7 @@ export class OwnHomeDataMessage {
     stream.writeVlong(player.id[0], player.id[1]);
     stream.writeVlong(player.id[0], player.id[1]);
     stream.writeVlong(player.id[0], player.id[1]);
-    stream.writeString(player.name);
+    stream.writeString(config.name);
     stream.writeBoolean(config.registered);
     stream.writeInt(-1);
 
