@@ -28,14 +28,12 @@ export let operator_new: any;
 export let messageManagerReceiveMessage: any;
 export let stringCtor: any;
 export let messagingSend: any;
-export let showFloaterText: any;
-export let gameButtonConstructor: any;
-export let getMovieClip: any;
 export let stageAddChild: any;
-export let setText: any;
-export let setXY: any;
 export let setTextAndScaleIfNecessary: any;
 export let getString: any;
+export let getDataByID: any;
+export let homeModeGetInstance: any;
+export let startGame: any;
 
 export function load() {
   if (isAndroid) {
@@ -70,38 +68,6 @@ export function load() {
     "pointer",
     "pointer",
   ]);
-  /*
-  showFloaterText = new NativeFunction(
-    base.add(Offsets.GUIShowFloaterTextAtDefaultPos),
-    "int",
-    ["pointer", "pointer", "int", "float"],
-  );
-  gameButtonConstructor = new NativeFunction(
-    base.add(Offsets.GameButtonConstructor),
-    "void",
-    ["pointer"],
-  );
-  getMovieClip = new NativeFunction(
-    base.add(Offsets.ResourceManagerGetMovieClip),
-    "pointer",
-    ["pointer", "pointer"],
-  );
-  stageAddChild = new NativeFunction(
-    base.add(Offsets.StageAddChild),
-    "pointer",
-    ["pointer", "pointer"],
-  );
-  setText = new NativeFunction(base.add(Offsets.TextFieldSetText), "int64", [
-    "pointer",
-    "pointer",
-    "bool",
-  ]);
-  setXY = new NativeFunction(base.add(Offsets.DisplayObjectSetXY), "pointer", [
-    "pointer",
-    "float",
-    "float",
-  ]);
-  */
   setTextAndScaleIfNecessary = new NativeFunction(
     base.add(Offsets.SetTextAndScaleIfNecessary),
     "void",
@@ -115,6 +81,35 @@ export function load() {
     ),
     "pointer",
     ["pointer"],
+  );
+  getDataByID = new NativeFunction(
+    base.add(
+      isAndroid
+        ? Offsets.LogicDataTablesGetDataByID
+        : Offsets.LogicDataTablesGetDataByIDThunk,
+    ),
+    "pointer",
+    ["int"],
+  );
+  homeModeGetInstance = new NativeFunction(
+    base.add(Offsets.HomeModeGetInstance),
+    "pointer",
+    [],
+  );
+  startGame = new NativeFunction(
+    base.add(isAndroid ? Offsets.StartGame : Offsets.StartGameThunk),
+    "void",
+    [
+      "pointer",
+      "pointer",
+      "pointer",
+      "int",
+      "int",
+      "pointer",
+      "int",
+      "pointer",
+      "int",
+    ],
   );
 
   documentsDirectory = getDocumentsDirectory();

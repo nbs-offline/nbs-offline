@@ -3,7 +3,7 @@ import { Player } from "../../../player";
 import { PlayerMap } from "../../../playermap";
 
 export class CreatePlayerMapResponseMessage {
-  static encode(player: Player, map: PlayerMap): number[] {
+  static encode(map: PlayerMap): number[] {
     let stream = new ByteStream([]);
 
     stream.writeVint(0);

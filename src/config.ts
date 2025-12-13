@@ -136,16 +136,18 @@ export function readConfig() {
   config.winstreak = json.winstreak || 0;
   config.winstreakBrawler = json.winstreakBrawler || 0;
   config.creationDate = json.creationDate || 0;
-  config.highestRoboRumbleLvlPassed =
-    json.previousStats.highestRoboRumbleLvlPassed || 0;
-  config.highestBossFightLvlPassed =
-    json.previousStats.highestBossFightLvlPassed || 0;
-  config.highestRampageLvlPassed =
-    json.previousStats.highestRampageLvlPassed || 0;
-  config.challengeWins = json.previousStats.challengeWins || 0;
-  config.highestClubLeague = json.previousStats.highestClubLeague || 0;
-  config.highestSoloLeague = json.previousStats.highestSoloLeague || 0;
-  config.r35brawlers = json.previousStats.r35brawlers || 0;
+  if (json.previousStats) {
+    config.highestRoboRumbleLvlPassed =
+      json.previousStats.highestRoboRumbleLvlPassed || 0;
+    config.highestBossFightLvlPassed =
+      json.previousStats.highestBossFightLvlPassed || 0;
+    config.highestRampageLvlPassed =
+      json.previousStats.highestRampageLvlPassed || 0;
+    config.challengeWins = json.previousStats.challengeWins || 0;
+    config.highestClubLeague = json.previousStats.highestClubLeague || 0;
+    config.highestSoloLeague = json.previousStats.highestSoloLeague || 0;
+    config.r35brawlers = json.previousStats.r35brawlers || 0;
+  }
 
   return config;
 }
@@ -213,15 +215,15 @@ export function writeConfig(config: Config) {
     data.winstreak = config.winstreak;
     data.winstreakBrawler = config.winstreakBrawler;
     data.creationDate = config.creationDate;
-    data.previousStats.highestRoboRumbleLvlPassed =
-      config.highestRoboRumbleLvlPassed;
-    data.previousStats.highestBossFightLvlPassed =
-      config.highestBossFightLvlPassed;
-    data.previousStats.highestRampageLvlPassed = config.highestRampageLvlPassed;
-    data.previousStats.challengeWins = config.challengeWins;
-    data.previousStats.highestClubLeague = config.highestClubLeague;
-    data.previousStats.highestSoloLeague = config.highestSoloLeague;
-    data.previousStats.r35brawlers = config.r35brawlers;
+    data.previousStats = {
+      highestRoboRumbleLvlPassed: config.highestRoboRumbleLvlPassed,
+      highestBossFightLvlPassed: config.highestBossFightLvlPassed,
+      highestRampageLvlPassed: config.highestRampageLvlPassed,
+      challengeWins: config.challengeWins,
+      highestClubLeague: config.highestClubLeague,
+      highestSoloLeague: config.highestSoloLeague,
+      r35brawlers: config.r35brawlers,
+    };
   }
 
   const remove = new NativeFunction(libc.getExportByName("remove"), "int", [

@@ -4,13 +4,16 @@ import {
   base,
   botNames,
   config,
+  homeModeGetInstance,
   setBotNames,
   setTextAndScaleIfNecessary,
+  startGame,
 } from "./definitions.js";
 import { Messaging } from "./messaging.js";
 import { createStringObject, decodeString, getBotNames } from "./util.js";
 import { ByteStream } from "./bytestream.js";
 import { isAndroid } from "./platform.js";
+import { LogicData } from "./logicdata.js";
 
 let progress: number;
 let hasLoaded = false;
@@ -212,4 +215,31 @@ export function installHooks() {
       return config.draftMapLimit
     }, 'int', [])
   )
+
+  Interceptor.replace(
+    base.add(Offsets.ReceiveTeamGameStartingMessage),
+    new NativeCallback(
+      function () {
+        console.log("trying to start");
+        const homePage = homeModeGetInstance()
+          .add(Offsets.HomeScreenInstance)
+          .readPointer()
+          .add(Offsets.HomePageInstance)
+          .readPointer();
+        startGame(
+          homePage,
+          ptr(0),
+          new LogicData(15, 5).ptr,
+          3,
+          0,
+          new LogicData(16, 0).ptr,
+          0,
+          new LogicData(29, 0).ptr,
+          0,
+        );
+      },
+      "void",
+      [],
+    ),
+  );
 }

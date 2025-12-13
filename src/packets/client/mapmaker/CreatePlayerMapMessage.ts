@@ -9,18 +9,17 @@ import { PlayerMap } from "../../../playermap";
 import { CreatePlayerMapResponseMessage } from "../../server/mapmaker/CreatePlayerMapResponseMessage.js";
 
 export class CreatePlayerMapMessage {
-  static decode(player: Player, stream: ByteStream): PlayerMap {
+  static decode(stream: ByteStream): PlayerMap {
     let mapName = stream.readString();
     let gmv = stream.readVint();
     let theme = stream.readDataReference().low;
     return new PlayerMap(mapName, gmv, theme);
   }
 
-  static execute(player: Player, stream: ByteStream) {
-    let map = this.decode(player, stream);
+  static execute(map: PlayerMap) {
     Messaging.sendOfflineMessage(
       22100,
-      CreatePlayerMapResponseMessage.encode(player, map),
+      CreatePlayerMapResponseMessage.encode(map),
     );
   }
 }

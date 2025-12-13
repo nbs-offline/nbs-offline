@@ -7,7 +7,6 @@ export class LogicSetPlayerNameColorCommand {
   static decode(stream: ByteStream): any {
     stream = LogicCommand.decode(stream);
     let colorID = stream.readDataReference().low;
-    console.log("New color id:", colorID);
     return { stream, colorID };
   }
 

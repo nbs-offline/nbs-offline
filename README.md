@@ -19,4 +19,8 @@ An offline client that supports Android and iOS.
 
 ## Credits
 
-OwnHomeDataMessage structure by Soufgame. Player profile by kubune. Map maker and teams from [ProjectColette](https://github.com/shei-bi/projectcolette-public).
+- OwnHomeDataMessage structure by Soufgame 
+- Player profile by kubune 
+- Map maker and teams structure slightly updated from Royale Brawl 
+- Android asset manager by libgud
+- Offline friendly battles from SMP

@@ -15,6 +15,14 @@ import { writeConfig } from "./config.js";
 import { PlayerProfileMessage } from "./packets/server/PlayerProfileMessage.js";
 import { AvatarNameCheckRequestMessage } from "./packets/client/namechange/AvatarNameCheckRequestMessage.js";
 import { ByteStream } from "./bytestream.js";
+import { ChangeAvatarNameMessage } from "./packets/client/namechange/ChangeAvatarNameMessage.js";
+import { EndClientTurnMessage } from "./packets/client/EndClientTurnMessage.js";
+import { SetSupportedCreatorMessage } from "./packets/client/SetSupportedCreatorMessage.js";
+import { CreatePlayerMapMessage } from "./packets/client/mapmaker/CreatePlayerMapMessage.js";
+import { PlayerMapsMessage } from "./packets/server/mapmaker/PlayerMapsMessage.js";
+import { DeletePlayerMapMessage } from "./packets/client/mapmaker/DeletePlayerMapMessage.js";
+import { TeamCreateMessage } from "./packets/client/teams/TeamCreateMessage.js";
+import { TeamGameStartingMessage } from "./packets/server/TeamGameStartingMessage.js";
 
 export class Messaging {
   static sendOfflineMessage(id: number, payload: number[]): NativePointer {
@@ -89,11 +97,43 @@ export class Messaging {
         AvatarNameCheckRequestMessage.execute(
           AvatarNameCheckRequestMessage.decode(stream),
         );
+        break;
       }
       // ChangeAvatarNameMessage
       case 10212: {
+        ChangeAvatarNameMessage.execute(ChangeAvatarNameMessage.decode(stream));
+        break;
+      }
+      case 14102: {
+        EndClientTurnMessage.execute(EndClientTurnMessage.decode(stream));
+        break;
+      }
+      case 18686: {
+        SetSupportedCreatorMessage.execute(
+          SetSupportedCreatorMessage.decode(stream),
+        );
+        break;
+      }
+      case 12100: {
+        CreatePlayerMapMessage.execute(CreatePlayerMapMessage.decode(stream));
+        break;
+      }
+      case 12102: {
+        Messaging.sendOfflineMessage(22102, PlayerMapsMessage.encode());
+        break;
+      }
+      case 12101: {
+        DeletePlayerMapMessage.execute(DeletePlayerMapMessage.decode(stream));
+        break;
+      }
+      case 14350: {
+        TeamCreateMessage.execute(TeamCreateMessage.decode(stream));
+        break;
+      }
+      case 14355: {
+        Messaging.sendOfflineMessage(24130, TeamGameStartingMessage.encode());
+        break;
       }
     }
   }
 }
-

@@ -7,8 +7,12 @@ import { SetSupportedCreatorResponseMessage } from "../server/SetSupportedCreato
 import { LogicSetSupportedCreatorCommand } from "../../commands/server/LogicSetSupportedCreatorCommand.js";
 
 export class SetSupportedCreatorMessage {
-  static decodeAndExecute(player: Player, stream: ByteStream) {
+  static decode(stream: ByteStream) {
     let ccc = stream.readString();
+    return ccc;
+  }
+
+  static execute(ccc: string) {
     if (ccc == "") {
       console.log("Clearing CCC");
     } else {
@@ -21,14 +25,14 @@ export class SetSupportedCreatorMessage {
     ) {
       return Messaging.sendOfflineMessage(
         28686,
-        SetSupportedCreatorResponseMessage.encode(player),
+        SetSupportedCreatorResponseMessage.encode(),
       );
     }
     config.supportedCreator = ccc;
     writeConfig(config);
     Messaging.sendOfflineMessage(
       24111,
-      LogicSetSupportedCreatorCommand.encode(player),
+      LogicSetSupportedCreatorCommand.encode(),
     );
   }
 }
