@@ -60,6 +60,53 @@
 
     "GlobalID": "0x20",
     
-    "LogicDataTablesGetDataByID": "0x7df1f4"
+    "LogicDataTablesGetDataByID": "0x7df1f4",
+
+    "WriteDataReference": "0x91185c",
+    "WriteVInt": "0x98e210",
+    "WriteInt": "0x98d8bc",
+    "WriteBoolean": "0x98d660",
+    "WriteLongLong": "0x98eb3c",
+    "WriteString": "0x98d200",
+
+    "ReadGlobalID": "0x911948",
+    "ReadVInt": "0x98e498",
+    "ReadInt": "0x98dc74",
+    "ReadBoolean": "0x98d748",
+    "ReadLongLong": "0x98ddd8",
+    "ReadString": "0x98d310",
+    "ReadVLong": "0x98e928",
+    "DecodeLogicLong": "0x9114ac",
+
+    "IsSupercellIDEnabled": "0x75290c",
+
+    "AddGameButton": "0x475fec",
+    "GetX": "0x94cf54",
+    "SetX": "0x94cef4",
+    "GetY": "0x94cfa8",
+    "SetY": "0x94cef",
+    "SetXY": "0x94cf04",
+    "GetWidth": "0x94d410",
+    "SetWidth": "0x94d548",
+    "GetHeight": "0x94d480",
+    "SetHeight": "0x94d4fc",
+    "GameButtonConstructor": "0x475230",
+    "SetText": "0x97c510",
+    "GetMovieClip": "0x928660",
+    "InitFn": 352,
+    "StageInstance": "0xf330f0",
+    "SpriteAddChild": "0x95e4b4",
+    "ButtonText": 96,
+    "GetTextFieldByName": "0x9520f8",
+    "SetMultiline": "0x97c928",
+    "AutoAdjustText": "0x7773d0",
+    "GetFontSize": "0x97c8d8",
+    "SetFontSize": "0x97c4bc",
+    "HomePageConstructor": "0x71b050",
+    "LoadAsset": "0x3b4c3c",
+    "SetTextFieldVerticallyCentered": "0x776818",
+    "ButtonPressed": "0x97fff8",
+    "ShowFloaterTextAtDefaultPos": "0x46fddc",
+    "GUIInstance": "0xf2e968"
   }
 }
