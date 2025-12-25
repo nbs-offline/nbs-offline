@@ -3,7 +3,6 @@ import { getOffsetsFromJSON, Offsets } from "./offsets.js";
 import { isAndroid } from "./platform.js";
 import { Player } from "./player.js";
 import { getDocumentsDirectory, getPackageName } from "./util.js";
-import { Logger } from "./utility/logger.js";
 
 export let base = NULL;
 
@@ -65,10 +64,9 @@ export const buttonHandlers: Array<{
 }> = [];
 
 export function load() {
-  if (isAndroid) {
+  if (isAndroid)
     pkgName = getPackageName();
-    Logger.verbose("Package name:", pkgName);
-  }
+
   version = getOffsetsFromJSON();
 
   createMessageByType = new NativeFunction(

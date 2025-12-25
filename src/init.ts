@@ -13,7 +13,7 @@ import { isAndroid } from "./platform.js";
 import { Logger } from "./utility/logger.js";
 import { Dumper } from "./utility/dump.js";
 import { setupCustomSettings } from "./customsettings.js";
-import { createStringObject } from "./util.js";
+import { createStringObject, getPackageName } from "./util.js";
 
 (async () => {
   if (isAndroid) await createAssetManager();
@@ -24,6 +24,8 @@ setBase(Module.getBaseAddress(library));
 
 load();
 Logger.info("Running on", isAndroid ? "Android" : "iOS");
+if (isAndroid)
+  Logger.verbose("Package name:", getPackageName());
 Logger.verbose(`${library} loaded at: ${base}`);
 for (const brawlerKey in player.ownedBrawlers) {
   const brawler = player.ownedBrawlers[brawlerKey];
