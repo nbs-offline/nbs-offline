@@ -101,9 +101,8 @@ export class OwnHomeDataMessage {
 
     // brawl pass
     // season data
-    let season = version == 59 ? 35 : 42;
     stream.writeVInt(1); // arr len
-    stream.writeVInt(season - 1);
+    stream.writeVInt(35 - 1);
     stream.writeVInt(config.passTokens);
     stream.writeBoolean(config.brawlPassPremium);
     stream.writeVInt(0);
@@ -140,7 +139,6 @@ export class OwnHomeDataMessage {
     stream.writeVInt(1); // 0
     stream.writeVInt(2); // 0
     stream.writeVInt(0);
-    if (version >= 64) stream.writeVInt(0); // new
     // end
 
     stream.writeBoolean(true);
@@ -420,7 +418,7 @@ export class OwnHomeDataMessage {
     stream.writeBoolean(config.registered);
     stream.writeInt(-1);
 
-    let count = version == 59 ? 24 : 30;
+    let count = 24;
     const unlockedBrawler = Object.values(config.ownedBrawlers).map(
       (i) => i.cardID,
     );
