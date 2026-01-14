@@ -3,6 +3,7 @@ import { installHooks } from "./mainHooks.js";
 import { isAndroid } from "./platform.js";
 import { Logger } from "./utility/logger.js";
 import { setupCustomSettings } from "./customsettings.js";
+import { setupMapMaker } from "./mapmaker.js";
 
 let library = isAndroid ? "libg.so" : "laser";
 setBase(Module.getBaseAddress(library));
@@ -18,3 +19,4 @@ for (const brawlerKey in config.ownedBrawlers) {
 }
 installHooks();
 if (config.customSettings) setupCustomSettings();
+setupMapMaker()

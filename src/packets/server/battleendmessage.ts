@@ -125,4 +125,3 @@ export class BattleEndMessage {
     return stream.payload;
   }
 }
-

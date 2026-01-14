@@ -18,13 +18,13 @@ function format(args: any[]): string {
     .map((a) => {
       if (typeof a === "string") return a;
 
-      if (a instanceof ArrayBuffer) {
+      if (isArrayBuffer(a)) {
         return Array.from(new Uint8Array(a))
           .map((b) => b.toString(16).padStart(2, "0"))
           .join(" ");
       }
 
-      if (a instanceof Uint8Array) {
+      if (isUint8Array(a)) {
         return Array.from(a)
           .map((b) => b.toString(16).padStart(2, "0"))
           .join(" ");
@@ -84,4 +84,24 @@ export class Logger {
     const line = `${getTimestamp()} [VERBOSE] ${msg}`;
     console.log(line);
   }
+}
+
+function isUint8Array(v: any): v is Uint8Array {
+  return (
+    v &&
+    typeof v === "object" &&
+    v.constructor &&
+    v.constructor.name === "Uint8Array" &&
+    typeof v.byteLength === "number"
+  );
+}
+
+function isArrayBuffer(v: any): v is ArrayBuffer {
+  return (
+    v &&
+    typeof v === "object" &&
+    v.constructor &&
+    v.constructor.name === "ArrayBuffer" &&
+    typeof v.byteLength === "number"
+  );
 }

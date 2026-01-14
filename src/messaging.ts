@@ -25,6 +25,8 @@ import { Logger } from "./utility/logger";
 import { LoginOkMessage } from "./packets/server/loginokmessage";
 import { AskForBattleEndMessage } from "./packets/client/askforbattleendmessage";
 import { SetCountryMessage } from "./packets/client/setcountrymessage";
+import { UpdatePlayerMapMessage } from "./packets/client/mapmaker/updateplayermapmessage";
+import { ChangePlayerMapNameMessage } from "./packets/client/mapmaker/changeplayermapnamemessage";
 
 export class Messaging {
   static sendOfflineMessage(id: number, payload: number[]): NativePointer {
@@ -114,6 +116,13 @@ export class Messaging {
       case 12100: {
         CreatePlayerMapMessage.execute(CreatePlayerMapMessage.decode(stream));
         break;
+      }
+      case 12103: {
+        UpdatePlayerMapMessage.execute(UpdatePlayerMapMessage.decode(stream));
+        break;
+      }
+      case 12106: {
+        ChangePlayerMapNameMessage.execute(ChangePlayerMapNameMessage.decode(stream))
       }
       case 12102: {
         Messaging.sendOfflineMessage(22102, PlayerMapsMessage.encode());

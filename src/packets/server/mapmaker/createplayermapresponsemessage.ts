@@ -1,5 +1,4 @@
 import { ByteStream } from "../../../bytestream";
-import { Player } from "../../../player";
 import { PlayerMap } from "../../../playermap";
 
 export class CreatePlayerMapResponseMessage {
