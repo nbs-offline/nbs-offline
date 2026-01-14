@@ -32,7 +32,7 @@
   "enableClubs": false,
   "china": false,
   "artTest": false,
-  "customLoadingScreen": false,
+  "customLoadingScreen": true,
   "debugMenu": false,
   "rankedCurrent": 0,
   "rankedHighest": 0,
