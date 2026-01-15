@@ -31,6 +31,7 @@ import { ChangePlayerMapNameMessage } from "./packets/client/mapmaker/changeplay
 export class Messaging {
   static sendOfflineMessage(id: number, payload: number[]): NativePointer {
     let version = id == 20104 ? 1 : 0;
+    let doNoCopyFix = (id === 23456) // TODO: Very jank
     const factory = Memory.alloc(512);
     factory.writePointer(base.add(Offsets.LogicLaserMessageFactory));
     let message = createMessageByType(factory, id);
@@ -41,14 +42,20 @@ export class Messaging {
     payloadLength.writeS32(payload.length);
     if (payload.length > 0) {
       let payloadPtr = operator_new(payload.length).writeByteArray(payload);
-      PiranhaMessage.getByteStream(message)
-        .add(Offsets.PayloadPtr)
-        .writePointer(payloadPtr);
+      const bytestream = PiranhaMessage.getByteStream(message);
+      bytestream.add(Offsets.PayloadPtr).writePointer(payloadPtr);        // buffer ptr
+      if (doNoCopyFix) {
+        // To fix No message bytestream to copy we skip the decode below
+        // Then it complains about write offset being 0
+        // So we set it here
+        bytestream.add(40).writeS32(payload.length);        // capacity
+        bytestream.add(20).writeS32(payload.length);        // write offset
+      }
     }
     let decodeOffset = message.readPointer().add(Offsets.Decode).readPointer();
     Logger.debug("Decode function for type", id + ":", decodeOffset.sub(base));
     let decode = new NativeFunction(decodeOffset, "void", ["pointer"]);
-    decode(message);
+    if (!doNoCopyFix) decode(message);
     Logger.debug("Message decoded succesfully");
     messageManagerReceiveMessage(getMessageManagerInstance(), message);
     Logger.debug("Message received");

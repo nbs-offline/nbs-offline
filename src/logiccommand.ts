@@ -14,7 +14,7 @@ export class LogicCommand {
   static decode(stream: ByteStream): ByteStream {
     stream.readVInt();
     stream.readVInt();
-    stream.readVlong();
+    stream.readVLong();
     return stream;
   }
 }

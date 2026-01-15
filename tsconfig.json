@@ -10,7 +10,8 @@
     "moduleResolution": "NodeNext",
     "baseUrl": ".",
     "paths": { // so ide dont complain
-      "version": ["src/version/v59/android/arm64/version.ts"]
+      "version": ["src/version/v59/android/arm64/version.ts"],
+      "OwnHomeDataMessage": ["src/packets/server/ownhomedatamessage/v59/ownhomedatamessage.ts"]
     }
   },
   "exclude": ["script.js"]
